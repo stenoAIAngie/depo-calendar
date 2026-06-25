@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Deposition to Calendar — Lanera</title>
+<style>
+  :root{
+    --navy:#0B1F3A;
+    --navy-deep:#071427;
+    --gold:#C9A227;
+    --gold-soft:#E8D8A0;
+    --paper:#F7F5F0;
+    --ink:#1A1A1A;
+    --line:#D9D2BD;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--paper);
+    font-family:'Georgia','Times New Roman',serif;
+    color:var(--ink);
+    padding:32px 16px 60px;
+  }
+  .wrap{max-width:620px;margin:0 auto;}
+  .header{
+    background:var(--navy);
+    color:var(--paper);
+    padding:22px 28px;
+    border-radius:6px 6px 0 0;
+    border-bottom:4px solid var(--gold);
+  }
+  .header .eyebrow{
+    font-family:Arial,Helvetica,sans-serif;
+    font-size:11px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--gold-soft);
+    margin:0 0 6px;
+  }
+  .header h1{
+    margin:0;
+    font-size:24px;
+    font-weight:400;
+  }
+  .header p{
+    font-family:Arial,Helvetica,sans-serif;
+    margin:8px 0 0;
+    font-size:13px;
+    color:#C9D3E0;
+  }
+  form{
+    background:#fff;
+    border:1px solid var(--line);
+    border-top:none;
+    padding:28px;
+    border-radius:0 0 6px 6px;
+  }
+  .field{margin-bottom:18px;}
+  label{
+    display:block;
+    font-family:Arial,Helvetica,sans-serif;
+    font-size:11px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--navy);
+    margin-bottom:6px;
+    font-weight:bold;
+  }
+  input,select,textarea{
+    width:100%;
+    padding:10px 12px;
+    border:1px solid var(--line);
+    border-radius:4px;
+    font-family:Arial,Helvetica,sans-serif;
+    font-size:16px;
+    background:var(--paper);
+    color:var(--ink);
+  }
+  textarea{resize:vertical;min-height:64px;}
+  input:focus,select:focus,textarea:focus{
+    outline:2px solid var(--gold);
+    outline-offset:1px;
+    background:#fff;
+  }
+  .row{display:flex;gap:14px;}
+  .row .field{flex:1;}
+  button{
+    width:100%;
+    padding:14px;
+    background:var(--gold);
+    color:var(--navy-deep);
+    border:none;
+    border-radius:4px;
+    font-family:Arial,Helvetica,sans-serif;
+    font-size:15px;
+    font-weight:bold;
+    letter-spacing:.03em;
+    cursor:pointer;
+    margin-top:6px;
+  }
+  button:hover{background:#D9B53A;}
+  button:active{transform:translateY(1px);}
+  .status{
+    font-family:Arial,Helvetica,sans-serif;
+    font-size:13px;
+    margin-top:12px;
+    text-align:center;
+    color:var(--navy);
+    min-height:18px;
+  }
+  .divider{
+    border-top:1px dashed var(--line);
+    margin:22px 0 18px;
+  }
+  .footer-note{
+    font-family:Arial,Helvetica,sans-serif;
+    font-size:11px;
+    color:#8a8a8a;
+    text-align:center;
+    margin-top:18px;
+  }
+  @media (max-width: 480px){
+    body{ padding:16px 10px 40px; }
+    .header{ padding:18px 18px; }
+    .header h1{ font-size:20px; }
+    form{ padding:18px; }
+    .row{ flex-direction:column; gap:0; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <p class="eyebrow">Lanera AI Consulting</p>
+    <h1>Deposition → Calendar</h1>
+    <p>Fill this in only when you accept the job. One click adds it.</p>
+  </div>
+
+  <form id="depoForm">
+
+    <div class="field">
+      <label for="caseName">Case Name</label>
+      <input type="text" id="caseName" placeholder="e.g. Rockie Alan Velardes Stevens v. Sang Van Nyugen" required>
+    </div>
+
+    <div class="field">
+      <label for="agency">Steno Agency</label>
+      <select id="agency" required>
+        <option value="" disabled selected>Select an agency</option>
+        <option value="U.S. Legal Support">U.S. Legal Support</option>
+        <option value="Steno">Steno</option>
+        <option value="Veritext">Veritext</option>
+        <option value="Lexitas">Lexitas</option>
+        <option value="Esquire Deposition Solutions">Esquire Deposition Solutions</option>
+        <option value="Other">Other (type below)</option>
+      </select>
+    </div>
+
+    <div class="field" id="agencyOtherField" style="display:none;">
+      <label for="agencyOther">Agency Name</label>
+      <input type="text" id="agencyOther" placeholder="Type the agency name">
+    </div>
+
+    <div class="row">
+      <div class="field">
+        <label for="depDate">Date</label>
+        <input type="date" id="depDate" required>
+      </div>
+      <div class="field">
+        <label for="startHour">Start Time</label>
+        <div style="display:flex; gap:8px;">
+          <select id="startHour" style="flex:1;">
+            <option value="1">1</option><option value="2">2</option><option value="3">3</option>
+            <option value="4">4</option><option value="5">5</option><option value="6">6</option>
+            <option value="7">7</option><option value="8">8</option><option value="9" selected>9</option>
+            <option value="10">10</option><option value="11">11</option><option value="12">12</option>
+          </select>
+          <select id="startMinute" style="flex:1;">
+            <option value="00" selected>00</option><option value="05">05</option><option value="10">10</option>
+            <option value="15">15</option><option value="20">20</option><option value="25">25</option>
+            <option value="30">30</option><option value="35">35</option><option value="40">40</option>
+            <option value="45">45</option><option value="50">50</option><option value="55">55</option>
+          </select>
+          <select id="startPeriod" style="flex:1;">
+            <option value="AM" selected>AM</option>
+            <option value="PM">PM</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="timezone">Time Zone</label>
+      <select id="timezone">
+        <option value="America/New_York" selected>Eastern Time</option>
+        <option value="America/Chicago">Central Time</option>
+        <option value="America/Denver">Mountain Time</option>
+        <option value="America/Phoenix">Mountain Time — Arizona (no DST)</option>
+        <option value="America/Los_Angeles">Pacific Time</option>
+        <option value="America/Anchorage">Alaska Time</option>
+        <option value="Pacific/Honolulu">Hawaii Time</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="duration">Estimated Length (hours)</label>
+      <input type="number" id="duration" value="3" min="1" max="12" step="0.5">
+    </div>
+
+    <div class="field">
+      <label for="location">Location / Platform Link</label>
+      <input type="text" id="location" placeholder="Zoom link, RDP link, or address">
+    </div>
+
+    <div class="field">
+      <label for="delivery">Delivery Option</label>
+      <select id="delivery">
+        <option value="Standard" selected>Standard (10-day turnaround)</option>
+        <option value="Expedite">Expedite (faster turnaround)</option>
+      </select>
+    </div>
+
+    <div class="row" id="expediteRow" style="display:none;">
+      <div class="field">
+        <label for="expediteDays">Expedite — Days Until Due</label>
+        <input type="number" id="expediteDays" value="3" min="1" max="9" step="1">
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="notes">Notes</label>
+      <textarea id="notes" placeholder="Witness name, videographer, password, host key, anything else worth remembering"></textarea>
+    </div>
+
+    <button type="submit">Add to Google Calendar</button>
+    <div class="status" id="status"></div>
+  </form>
+
+  <p class="footer-note">Opens a pre-filled Google Calendar event in a new tab. Nothing is added until you click Save on Google's screen.</p>
+</div>
+
+<script>
+function pad(n){ return n.toString().padStart(2,'0'); }
+
+function toGCalDateTime(dateStr, timeStr){
+  const [y,m,d] = dateStr.split('-');
+  const [h,min] = timeStr.split(':');
+  return `${y}${m}${d}T${pad(h)}${pad(min)}00`;
+}
+
+function addHours(dateStr, timeStr, hours){
+  const dt = new Date(`${dateStr}T${timeStr}:00`);
+  dt.setMinutes(dt.getMinutes() + Math.round(hours*60));
+  const y = dt.getFullYear();
+  const m = pad(dt.getMonth()+1);
+  const d = pad(dt.getDate());
+  const hh = pad(dt.getHours());
+  const mm = pad(dt.getMinutes());
+  return `${y}${m}${d}T${hh}${mm}00`;
+}
+
+document.getElementById('agency').addEventListener('change', function(){
+  const otherField = document.getElementById('agencyOtherField');
+  if(this.value === 'Other'){
+    otherField.style.display = 'block';
+    document.getElementById('agencyOther').setAttribute('required','required');
+  } else {
+    otherField.style.display = 'none';
+    document.getElementById('agencyOther').removeAttribute('required');
+  }
+});
+
+document.getElementById('delivery').addEventListener('change', function(){
+  document.getElementById('expediteRow').style.display = (this.value === 'Expedite') ? 'flex' : 'none';
+});
+
+function addDays(dateStr, days){
+  const dt = new Date(`${dateStr}T00:00:00`);
+  dt.setDate(dt.getDate() + days);
+  const opts = { year:'numeric', month:'long', day:'numeric' };
+  return dt.toLocaleDateString('en-US', opts);
+}
+
+document.getElementById('depoForm').addEventListener('submit', function(e){
+  e.preventDefault();
+
+  const caseName = document.getElementById('caseName').value.trim();
+  const agencySelect = document.getElementById('agency').value;
+  const agency = agencySelect === 'Other' ? document.getElementById('agencyOther').value.trim() : agencySelect;
+  const date = document.getElementById('depDate').value;
+  const startHour = parseInt(document.getElementById('startHour').value);
+  const startMinute = document.getElementById('startMinute').value;
+  const startPeriod = document.getElementById('startPeriod').value;
+  let hour24 = startHour % 12;
+  if(startPeriod === 'PM') hour24 += 12;
+  const time = `${pad(hour24)}:${startMinute}`;
+  const duration = parseFloat(document.getElementById('duration').value) || 3;
+  const location = document.getElementById('location').value.trim();
+  const notes = document.getElementById('notes').value.trim();
+  const delivery = document.getElementById('delivery').value;
+  const expediteDays = parseInt(document.getElementById('expediteDays').value) || 3;
+  const timezone = document.getElementById('timezone').value;
+
+  if(!caseName || !agency || !date){
+    document.getElementById('status').textContent = 'Please fill in case name, agency, and date.';
+    return;
+  }
+
+  const title = `${formatTimeLabel(time)} - ${caseName} - ${agency}`;
+  const startDT = toGCalDateTime(date, time);
+  const endDT = addHours(date, time, duration);
+
+  let deliveryLine;
+  if(delivery === 'Expedite'){
+    deliveryLine = `Delivery: Expedite — due ${addDays(date, expediteDays)} (${expediteDays}-day turnaround)`;
+  } else {
+    deliveryLine = `Delivery: Standard — due ${addDays(date, 10)} (10-day turnaround)`;
+  }
+
+  let details = `Agency: ${agency}`;
+  details += `\n${deliveryLine}`;
+  if(notes) details += `\n\nNotes:\n${notes}`;
+
+  const params = new URLSearchParams({
+    action: 'TEMPLATE',
+    text: title,
+    dates: `${startDT}/${endDT}`,
+    details: details,
+    location: location,
+    ctz: timezone
+  });
+
+  const url = `https://calendar.google.com/calendar/render?${params.toString()}`;
+  window.open(url, '_blank');
+
+  document.getElementById('status').textContent = 'Opened in Google Calendar. Hit Save there to lock it in.';
+});
+
+function formatTimeLabel(timeStr){
+  const [h,m] = timeStr.split(':').map(Number);
+  const period = h >= 12 ? 'PM' : 'AM';
+  let hour12 = h % 12;
+  if(hour12 === 0) hour12 = 12;
+  return `${hour12}:${pad(m)} ${period}`;
+}
+</script>
+
+</body>
+</html>
